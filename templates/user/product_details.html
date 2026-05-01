@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a,#020617);
+    color:#f1f5f9;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+/* CARD */
+.product-card{
+    display:flex;
+    gap:30px;
+    background:#0f172a;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #1e293b;
+    box-shadow:0 0 25px rgba(34,197,94,0.15);
+}
+
+/* LEFT IMAGE */
+.left{
+    flex:1;
+}
+
+/* MAIN IMAGE */
+.main-img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.main-img:hover{
+    transform:scale(1.05);
+}
+
+/* THUMBNAILS */
+.thumbs{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.thumbs img{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:8px;
+    cursor:pointer;
+    opacity:0.7;
+    border:2px solid transparent;
+}
+
+.thumbs img:hover{
+    opacity:1;
+    border:2px solid #22c55e;
+}
+
+/* RIGHT DETAILS */
+.right{
+    flex:1;
+}
+
+/* TITLE */
+h2{
+    margin:0;
+    font-size:28px;
+}
+
+/* PRICE */
+.price{
+    color:#22c55e;
+    font-size:24px;
+    margin:10px 0;
+    font-weight:bold;
+}
+
+/* RATING */
+.rating{
+    color:#facc15;
+    margin-bottom:10px;
+}
+
+/* DESC */
+.desc{
+    color:#94a3b8;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+/* META */
+.meta{
+    font-size:14px;
+    color:#cbd5f5;
+    margin-bottom:15px;
+}
+
+/* QUANTITY */
+.qty-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.qty-box button{
+    background:#334155;
+    border:none;
+    color:white;
+    width:35px;
+    height:35px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.qty-box input{
+    width:50px;
+    text-align:center;
+    background:#020617;
+    border:1px solid #334155;
+    color:white;
+    border-radius:6px;
+}
+
+/* BUTTONS */
+.btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    text-align:center;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+
+/* CART */
+.cart-btn{
+    background:#22c55e;
+    color:black;
+    box-shadow:0 0 10px rgba(34,197,94,0.5);
+}
+
+.cart-btn:hover{
+    background:#16a34a;
+    transform:scale(1.03);
+    box-shadow:0 0 20px rgba(34,197,94,0.8);
+}
+
+/* BUY NOW */
+.buy-btn{
+    margin-top:10px;
+    background:#f59e0b;
+    color:black;
+}
+
+.buy-btn:hover{
+    background:#d97706;
+}
+
+/* BACK */
+.back-btn{
+    margin-top:15px;
+    display:inline-block;
+    color:#94a3b8;
+    text-decoration:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .product-card{
+        flex-direction:column;
+    }
+
+    .main-img{
+        height:250px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="product-card">
+
+    <!-- LEFT -->
+    <div class="left">
+        <img id="mainImage"
+             class="main-img"
+             src="/static/uploads/product_images/{{ product.image }}">
+
+        <!-- OPTIONAL thumbnails (duplicate image for now) -->
+        <div class="thumbs">
+            <img src="/static/uploads/product_images/{{ product.image }}" onclick="changeImg(this)">
+            <img src="/static/uploads/product_images/{{ product.image }}" onclick="changeImg(this)">
+            <img src="/static/uploads/product_images/{{ product.image }}" onclick="changeImg(this)">
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+        <h2>{{ product.name }}</h2>
+
+        <div class="rating">⭐⭐⭐⭐☆ (4.2)</div>
+
+        <div class="price">₹ {{ product.price }}</div>
+
+        <div class="meta">
+            Category: {{ product.category }} <br>
+            Availability: <span style="color:#22c55e;">In Stock</span>
+        </div>
+
+        <div class="desc">
+            {{ product.description }}
+        </div>
+
+        <!-- QUANTITY -->
+        <div class="qty-box">
+            <button onclick="changeQty(-1)">-</button>
+            <input type="text" id="qty" value="1">
+            <button onclick="changeQty(1)">+</button>
+        </div>
+
+        <!-- BUTTONS -->
+        <a class="btn cart-btn"
+           href="/add-to-cart/{{ product.product_id }}">
+           🛒 Add to Cart
+        </a>
+
+        <a class="btn buy-btn"
+           href="/checkout">
+           ⚡ Buy Now
+        </a>
+
+        <a class="back-btn" href="/user/products">
+            ← Back to Products
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+function changeImg(el){
+    document.getElementById("mainImage").src = el.src;
+}
+
+function changeQty(val){
+    let q = document.getElementById("qty");
+    let num = parseInt(q.value) || 1;
+    num += val;
+    if(num < 1) num = 1;
+    q.value = num;
+}
+</script>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart - Victim's Cart</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a, #020617);
+    color: #f1f5f9;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #020617 !important;
+    border-bottom: 1px solid #1e293b;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #22c55e !important;
+}
+
+.nav-link {
+    color: #94a3b8 !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #22c55e !important;
+}
+
+/* TABLE BOX */
+.table-box {
+    background: #020617;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 0 25px rgba(34,197,94,0.15);
+}
+
+/* TABLE */
+.table {
+    color: #f1f5f9;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+/* HEADER */
+.table thead th {
+    border: none;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* ROW STYLE */
+.table tbody tr {
+    background: #0f172a;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.table tbody tr:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 12px rgba(34,197,94,0.3);
+}
+
+/* CELL */
+.table td {
+    border: none;
+    padding: 15px;
+}
+
+/* PRICE + TOTAL */
+.table td:nth-child(4),
+.table td:nth-child(6) {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+/* CHECKBOX */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #22c55e;
+}
+
+/* BUTTONS */
+.btn-danger {
+    background: #ef4444;
+    border: none;
+}
+
+.btn-success {
+    background: #22c55e;
+    border: none;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #16a34a;
+}
+
+/* TOTAL BOX */
+.total-box {
+    margin-top: 20px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: right;
+}
+
+.total-box h4 {
+    color: #22c55e;
+}
+
+/* ACTIONS */
+.actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-secondary {
+    background: #334155;
+    border: none;
+}
+
+.btn-primary {
+    background: #22c55e;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #16a34a;
+}
+
+/* EMPTY */
+.text-center {
+    color: #cbd5f5;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .table {
+        font-size: 12px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="{{ url_for('user_dashboard') }}">🛒 Victim's Cart</a>
+
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="{{ url_for('user_dashboard') }}">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('user_products') }}">Browse</a></li>
+<li class="nav-item"><a class="nav-link active" href="{{ url_for('view_cart') }}">Cart</a></li>
+<li class="nav-item"><a class="nav-link" href="{{ url_for('user_logout') }}">Logout</a></li>
+</ul>
+</div>
+</nav>
+
+<div class="container py-4">
+
+<h2 class="mb-4">🛒 My Cart</h2>
+
+{% if cart_items %}
+{% set ns = namespace(total=0) %}
+
+<div class="table-box">
+
+<table class="table text-center">
+
+<thead>
+<tr>
+<th><input type="checkbox" id="selectAll"></th>
+<th>#</th>
+<th>Product</th>
+<th>Price</th>
+<th>Qty</th>
+<th>Subtotal</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in cart_items %}
+{% set subtotal = item.price * item.quantity %}
+{% set ns.total = ns.total + subtotal %}
+
+<tr>
+<td>
+<input type="checkbox" class="item-checkbox"
+data-price="{{ item.price }}"
+data-qty="{{ item.quantity }}">
+</td>
+
+<td>{{ loop.index }}</td>
+<td>{{ item.name }}</td>
+<td>₹{{ item.price }}</td>
+<td>{{ item.quantity }}</td>
+<td>₹{{ subtotal }}</td>
+
+<td>
+<a href="{{ url_for('remove_from_cart', product_id=item.product_id) }}" class="btn btn-sm btn-danger">🗑</a>
+<a href="{{ url_for('add_to_cart', product_id=item.product_id) }}" class="btn btn-sm btn-success">+</a>
+<a href="{{ url_for('decrease_cart', product_id=item.product_id) }}" class="btn btn-sm btn-warning">-</a>
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- TOTAL -->
+<div class="total-box">
+<h4>Selected Total: ₹<span id="selectedTotal">0</span></h4>
+</div>
+
+<!-- BUTTONS -->
+<div class="actions">
+<a href="{{ url_for('user_products') }}" class="btn btn-secondary">← Continue</a>
+<a href="{{ url_for('checkout') }}" class="btn btn-primary">Checkout →</a>
+</div>
+
+{% else %}
+
+<div class="text-center py-5">
+<div style="font-size:80px;">🛒</div>
+<h3>Your cart is empty</h3>
+<a href="{{ url_for('user_products') }}" class="btn btn-primary mt-3">Start Shopping</a>
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- JS -->
+<script>
+const checkboxes = document.querySelectorAll('.item-checkbox');
+const totalDisplay = document.getElementById('selectedTotal');
+const selectAll = document.getElementById('selectAll');
+
+function updateTotal() {
+let total = 0;
+
+checkboxes.forEach(cb => {
+if (cb.checked) {
+let price = parseFloat(cb.dataset.price);
+let qty = parseInt(cb.dataset.qty);
+total += price * qty;
+}
+});
+
+totalDisplay.innerText = total.toFixed(2);
+}
+
+checkboxes.forEach(cb => {
+cb.addEventListener('change', updateTotal);
+});
+
+selectAll.addEventListener('change', function () {
+checkboxes.forEach(cb => cb.checked = this.checked);
+updateTotal();
+});
+</script>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

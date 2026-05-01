@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify OTP - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2c6c, #1e56a0, #0a1f44);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.container {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* TITLE */
+h2 {
+    color: #1e56a0;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #1e56a0;
+    box-shadow: 0 0 6px rgba(30,86,160,0.3);
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1e56a0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #0f2c6c;
+}
+
+/* FLASH MESSAGE */
+p {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 450px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🔐 Verify OTP</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <input type="text" name="otp" placeholder="Enter OTP" required>
+
+        <input type="password" name="password" placeholder="New Password" required>
+
+        <button type="submit">Verify & Reset</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

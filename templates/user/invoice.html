@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice - Victim's Cart</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #1e56a0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #1e56a0;
+            margin: 0;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin: 4px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background: #1e56a0;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .address-box {
+            background: #f8f9fc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: gray;
+            font-size: 13px;
+        }
+
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background: #1e56a0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #0f2c6c;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="invoice-box">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🛒 Victim's Cart Invoice</h1>
+        <p>Thank you for shopping with us!</p>
+    </div>
+
+    <!-- USER INFO -->
+    <div class="info">
+
+        <p><b>Order ID:</b> {{ order_id }}</p>
+        <p><b>Name:</b> {{ user_name }}</p>
+        <p><b>Email:</b> {{ email }}</p>
+
+    </div>
+
+    <!-- ADDRESS (SAFE FIXED) -->
+    {% if address %}
+    <div class="address-box">
+        <h3>📍 Delivery Address</h3>
+        <p>{{ address.house_no }}, {{ address.area }}</p>
+        <p>{{ address.locality }}, {{ address.mandal }}</p>
+        <p>{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
+    </div>
+    {% else %}
+    <p><b>No address found</b></p>
+    {% endif %}
+
+    <!-- ITEMS TABLE -->
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>₹{{ item.price * item.quantity }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <!-- GRAND TOTAL -->
+    <div class="total">
+        Grand Total: ₹{{ grand_total }}
+    </div>
+
+    <!-- BACK BUTTON -->
+    <a href="/user-dashboard" class="btn">⬅ Back to Dashboard</a>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        © Victim's Cart | All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>

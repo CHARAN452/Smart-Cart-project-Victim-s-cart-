@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Product List - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* HEADER */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #1e56a0;
+}
+
+/* CONTAINER */
+.container {
+    width: 95%;
+    margin: auto;
+}
+
+/* ADD BUTTON */
+.add-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #1e56a0;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 15px 0;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    background: #0f2c6c;
+}
+
+/* TABLE CARD */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* HEADER */
+th {
+    background: #1e56a0;
+    color: white;
+    padding: 14px;
+}
+
+/* CELLS */
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* IMAGE */
+img {
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* EMPTY TEXT */
+.empty {
+    text-align: center;
+    color: gray;
+    margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    img {
+        width: 60px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📦 Victim's Cart - Product List</h2>
+
+    <a href="/admin/add-item" class="add-btn">
+        + Add New Product
+    </a>
+
+    {% if products %}
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for p in products %}
+            <tr>
+                <td>{{ p.product_id }}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.category }}</td>
+                <td>₹{{ p.price }}</td>
+                <td>
+                    <img src="/static/uploads/product_images/{{ p.image }}" width="80">
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+        <p class="empty">No products found</p>
+    {% endif %}
+
+</div>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

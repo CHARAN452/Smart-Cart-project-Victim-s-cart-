@@ -1,0 +1,175 @@
+/* GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(90deg, #0f2c6c, #1e56a0);
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar h2 {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+/* CONTAINER */
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+/* CARD DESIGN */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #1e56a0;
+    color: white;
+}
+
+.btn-danger {
+    background: #e63946;
+    color: white;
+}
+
+.btn-success {
+    background: #2a9d8f;
+    color: white;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #0f2c6c;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* FORM */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* FOOTER */
+.footer {
+    background: #0f2c6c;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.footer h3 {
+    margin-bottom: 10px;
+}
+
+.footer p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* DASHBOARD CARDS */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.dashboard .card {
+    text-align: center;
+    background: linear-gradient(135deg, #1e56a0, #0f2c6c);
+    color: white;
+}
+
+/* MOBILE RESPONSIVE FIX */
+@media (max-width: 768px) {
+
+    /* NAVBAR FIX */
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* HERO TEXT */
+    .hero-text h1 {
+        font-size: 28px !important;
+    }
+
+    .hero-text p {
+        font-size: 14px !important;
+    }
+
+    /* CARD WIDTH */
+    .card,
+    .product-card {
+        width: 100% !important;
+    }
+
+    /* BUTTON STACK */
+    .buttons {
+        flex-direction: column;
+    }
+
+    /* FORM */
+    form .col-md-5,
+    form .col-md-4,
+    form .col-md-3 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+}

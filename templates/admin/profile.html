@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Profile - Victim's Cart</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2c6c, #1e56a0, #0a1f44);
+}
+
+/* WRAPPER */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* PROFILE CARD */
+.container {
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* TITLE */
+h2 {
+    color: #1e56a0;
+    margin-bottom: 15px;
+}
+
+/* IMAGE */
+img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1e56a0;
+    margin-bottom: 15px;
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #1e56a0;
+    box-shadow: 0 0 6px rgba(30,86,160,0.3);
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1e56a0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0f2c6c;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    background: #444;
+    margin-bottom: 15px;
+}
+
+.back-btn:hover {
+    background: #222;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* FOOTER */
+footer {
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #22c55e;
+    padding: 20px 10px;
+    text-align: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+footer h6 {
+    color: #22c55e;
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #22c55e;
+    margin: 0 8px;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #16a34a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- PROFILE CARD -->
+    <div class="container">
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            <button type="button" class="back-btn">← Back to Dashboard</button>
+        </a>
+
+        <h2>👤 Admin Profile</h2>
+
+        {% if admin and admin.profile_image %}
+            <img src="{{ url_for('static', filename='uploads/admin_profiles/' ~ admin.profile_image) }}">
+        {% else %}
+            <img src="{{ url_for('static', filename='uploads/default.png') }}">
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('update_admin_profile') }}" enctype="multipart/form-data">
+
+            <input type="text" name="name" value="{{ admin.name if admin else '' }}" placeholder="Name" required>
+
+            <input type="email" name="email" value="{{ admin.email if admin else '' }}" placeholder="Email" required>
+
+            <input type="password" name="password" placeholder="New Password (optional)">
+
+            <input type="file" name="profile_image" accept="image/*">
+
+            <button type="submit">Update Profile</button>
+
+        </form>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h6>🛒 Victim's Cart</h6>
+
+        <p>@copyright All rights reserved by <b>Charan</b></p>
+
+        <p>📧 charanv003@gmail.com</p>
+        <p>📱 +91 7799431776</p>
+
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+
+    </footer>
+
+</div>
+
+</body>
+</html>

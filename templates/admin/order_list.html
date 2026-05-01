@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order List - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* CONTAINER */
+.container {
+    width: 95%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* TITLE */
+h2 {
+    text-align: center;
+    color: #1e56a0;
+    margin-top: 20px;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: white;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+th {
+    background: #1e56a0;
+    color: white;
+    padding: 14px;
+}
+
+/* CELLS */
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* ACTION BUTTON */
+a.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #1e56a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+a.btn:hover {
+    background: #0f2c6c;
+}
+
+/* EMPTY */
+.empty {
+    text-align: center;
+    color: gray;
+    padding: 15px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>📦 All Orders - Victim's Cart</h2>
+
+    <div class="table-card">
+
+        <table>
+
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+
+            {% if orders %}
+                {% for o in orders %}
+                <tr>
+                    <td>{{ o.order_id }}</td>
+                    <td>{{ o.user_id }}</td>
+                    <td>₹{{ o.total_price }}</td>
+                    <td>{{ o.order_status }}</td>
+                    <td>{{ o.created_at }}</td>
+
+                    <!-- FIXED: moved inside td -->
+                    <td>
+                        <a class="btn" href="{{ url_for('admin_order_details', order_id=o.order_id) }}">
+                            View
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" class="empty">No orders found</td>
+                </tr>
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</div>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

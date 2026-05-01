@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Login - Victim's Cart</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+    height: 100vh;
+}
+
+/* CENTER */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* CARD */
+.card {
+    background: #0f172a;
+    width: 360px;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(0,255,150,0.15);
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* LOGO */
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #e2e8f0;
+}
+
+.logo span {
+    color: #22c55e;
+}
+
+/* TEXT */
+.subtitle {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #f1f5f9;
+    margin-bottom: 5px;
+}
+
+.sub-text {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+form {
+    text-align: left;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #020617;
+    color: white;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: #64748b;
+}
+
+input:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px #22c55e;
+}
+
+/* LINK */
+.link {
+    margin-top: 18px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.link a {
+    color: #22c55e;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="logo">🛒 Victim's <span>Cart</span></div>
+        <div class="subtitle">Welcome Back</div>
+
+        <h2>Login to Your Account</h2>
+        <div class="sub-text">Access your cart & orders</div>
+
+        <form method="POST">
+
+            <input type="email" name="email" placeholder="Enter Email" required>
+
+            <input type="password" name="password" placeholder="Enter Password" required>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <div class="link">
+            <a href="/user-register">Don't have an account? Register</a>
+        </div>
+
+    </div>
+
+</div>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

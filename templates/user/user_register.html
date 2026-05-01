@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Victim's Cart</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a, #020617);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* FLOATING GLOW */
+body::before, body::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: #22c55e;
+    filter: blur(120px);
+    opacity: 0.2;
+    animation: float 6s infinite alternate;
+}
+
+body::after {
+    right: 0;
+    bottom: 0;
+}
+
+@keyframes float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(50px); }
+}
+
+/* CENTER */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* GLASS CARD */
+.card {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    padding: 35px;
+    border-radius: 16px;
+    width: 380px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* LOGO */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e2e8f0;
+}
+.logo span { color: #22c55e; }
+
+/* TEXT */
+.subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+h2 { color: white; margin-bottom: 5px; }
+
+/* INPUT GROUP */
+.input-group {
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #020617;
+    color: white;
+}
+
+input:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+}
+
+/* PASSWORD TOGGLE */
+.toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #22c55e;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 0 15px #22c55e;
+    transform: scale(1.03);
+}
+
+/* LINK */
+.link {
+    margin-top: 15px;
+    color: #94a3b8;
+}
+.link a {
+    color: #22c55e;
+    text-decoration: none;
+}
+
+</style>
+</head>
+
+<body class="no-footer">
+
+<div class="container">
+
+<div class="card">
+
+<div class="logo">🛒 Victim's <span>Cart</span></div>
+<div class="subtitle">Create your account</div>
+
+<form method="POST">
+
+<input type="text" name="name" placeholder="Full Name" required>
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="text" name="mobile" placeholder="Mobile">
+
+<div class="input-group">
+<input type="password" id="password" name="password" placeholder="Password" required>
+<i class="fas fa-eye toggle" onclick="togglePassword()"></i>
+</div>
+
+<button>Create Account</button>
+
+</form>
+
+<div class="link">
+Already have an account? <a href="/user-login">Login</a>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function togglePassword() {
+    const p = document.getElementById("password");
+    p.type = p.type === "password" ? "text" : "password";
+}
+</script>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

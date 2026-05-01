@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Details - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a,#020617);
+    color:#f1f5f9;
+}
+
+/* CONTAINER */
+.container{
+    max-width:900px;
+    margin:auto;
+    margin-top:40px;
+    padding:20px;
+}
+
+/* CARD */
+.card{
+    display:flex;
+    gap:30px;
+    background:#0f172a;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #1e293b;
+    box-shadow:0 0 25px rgba(34,197,94,0.15);
+    transition:0.3s;
+}
+
+/* IMAGE */
+.product-img{
+    width:300px;
+    height:300px;
+    object-fit:cover;
+    border-radius:12px;
+    transition:0.4s;
+}
+
+.product-img:hover{
+    transform:scale(1.05);
+}
+
+/* DETAILS */
+.details{
+    flex:1;
+}
+
+/* TITLE */
+.product-title{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+/* PRICE */
+.price{
+    font-size:22px;
+    color:#22c55e;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+/* DESC */
+.desc{
+    margin:15px 0;
+    color:#94a3b8;
+    line-height:1.5;
+}
+
+/* BUTTONS */
+.btn{
+    display:inline-block;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:500;
+    margin-right:10px;
+    transition:0.3s;
+}
+
+/* BUY */
+.buy-btn{
+    background:#f59e0b;
+    color:black;
+}
+
+.buy-btn:hover{
+    background:#d97706;
+}
+
+/* CART */
+.cart-btn{
+    background:#22c55e;
+    color:black;
+    box-shadow:0 0 10px rgba(34,197,94,0.4);
+}
+
+.cart-btn:hover{
+    background:#16a34a;
+    transform:scale(1.05);
+}
+
+/* BACK */
+.back-btn{
+    background:#334155;
+    color:white;
+    margin-top:15px;
+}
+
+.back-btn:hover{
+    background:#475569;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+    .card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .product-img{
+        width:100%;
+        height:250px;
+    }
+
+    .btn{
+        display:block;
+        width:100%;
+        margin-bottom:10px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- IMAGE -->
+        <img class="product-img"
+             src="{{ url_for('static', filename='uploads/product_images/' + product.image) }}"
+             alt="Product Image">
+
+        <!-- DETAILS -->
+        <div class="details">
+
+            <h2 class="product-title">{{ product.name }}</h2>
+
+            <div class="price">₹{{ product.price }}</div>
+
+            <div class="desc">
+                {{ product.description }}
+            </div>
+
+            <!-- ACTIONS -->
+            <a href="/buy-now/{{ product.product_id }}" class="btn buy-btn">
+                ⚡ Buy Now
+            </a>
+
+            <a href="/add-to-cart/{{ product.product_id }}" class="btn cart-btn">
+                🛒 Add to Cart
+            </a>
+
+            <br><br>
+
+            <a href="/products" class="btn back-btn">
+                ← Back to Products
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

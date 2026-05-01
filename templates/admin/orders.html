@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Orders - Victim's Cart</title>
+
+<style>
+
+/* BODY LAYOUT FIX */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* TITLE */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #1e56a0;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 10px 16px;
+    background: #1e56a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: #0f2c6c;
+}
+
+/* CONTAINER */
+.container {
+    width: 95%;
+    margin: auto;
+    padding: 20px;
+    flex: 1;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: white;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+th {
+    background: #1e56a0;
+    color: white;
+    padding: 14px;
+}
+
+/* CELLS */
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* STRIPED ROWS */
+tr:nth-child(even) {
+    background: #f8f9fc;
+}
+
+/* VIEW BUTTON */
+a {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #1e56a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+a:hover {
+    background: #0f2c6c;
+}
+
+/* EMPTY */
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: gray;
+}
+
+/* FOOTER */
+footer {
+    margin-top: auto;
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+{% include 'admin/navbar.html' %}
+
+<div class="container">
+
+    <h2>📦 All Customer Orders - Victim's Cart</h2>
+
+    <!-- BACK TO DASHBOARD BUTTON -->
+    <div style="text-align:center;">
+        <a href="/admin-dashboard" class="back-btn">
+            ⬅ Back to Dashboard
+        </a>
+    </div>
+
+    <div class="table-card">
+
+        <table>
+
+            <tr>
+                <th>Order ID</th>
+                <th>User ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment ID</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+
+            {% if orders %}
+                {% for order in orders %}
+                <tr>
+
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user_id }}</td>
+                    <td>₹{{ order.amount }}</td>
+                    <td>{{ order.order_status if order.order_status else 'Pending' }}</td>
+                    <td>{{ order.razorpay_payment_id if order.razorpay_payment_id else '-' }}</td>
+                    <td>{{ order.created_at }}</td>
+
+                    <td>
+                        <a href="{{ url_for('admin_order_details', order_id=order.id) }}">
+                            View
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7" class="empty">No orders found</td>
+                </tr>
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">Facebook</a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">Instagram</a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">Twitter</a>
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

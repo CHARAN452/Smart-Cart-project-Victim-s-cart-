@@ -1,0 +1,126 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+window.onload = function () {
+
+    const payBtn = document.getElementById("pay-btn");
+
+    payBtn.addEventListener("click", async function () {
+
+        try {
+
+            // 1️⃣ Create order from backend
+            let response = await fetch("/create-order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                alert("Server error while creating order");
+                return;
+            }
+
+            let order = await response.json();
+
+            console.log("Order received:", order);
+
+            // 2️⃣ Razorpay options
+            var options = {
+                "key": order.key,   // 👈 IMPORTANT: send from backend
+                "amount": order.amount,
+                "currency": "INR",
+                "name": "SmartCart",
+                "description": "Order Payment",
+                "order_id": order.id,
+
+                "handler": function (response) {
+
+                    fetch("/verify-payment", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(result => {
+
+                        if (result.status === "success") {
+                            // ✅ FINAL REDIRECT FIX
+                            window.location.href = "/user/order-success/" + result.order_id;
+                        } else {
+                            alert("Payment verification failed");
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("Payment verification error");
+                    });
+
+                },
+
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+
+            var rzp = new Razorpay(options);
+            rzp.open();
+
+        } catch (err) {
+            console.log(err);
+            alert("Payment failed");
+        }
+
+    });
+
+};
+</script>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>

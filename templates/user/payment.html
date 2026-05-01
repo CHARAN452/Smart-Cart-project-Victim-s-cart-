@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Victim's Cart</title>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- FIX: Font Awesome added -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* BACKGROUND */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a, #020617);
+    color: #f1f5f9;
+}
+
+/* WRAPPER */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* CARD */
+.payment-card {
+    background: #0f172a;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 0 25px rgba(34,197,94,0.2);
+}
+
+/* ICON */
+.icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+/* BUTTON */
+.pay-btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background: #22c55e;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    animation: glow 1.5s infinite alternate;
+}
+
+.pay-btn:hover {
+    background: #16a34a;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+    }
+    to {
+        box-shadow: 0 0 20px #22c55e, 0 0 40px #22c55e;
+    }
+}
+
+/* FOOTER */
+footer {
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+footer h6 {
+    color: #22c55e;
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #94a3b8;
+    margin: 0 8px;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #22c55e;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .payment-card {
+        padding: 25px;
+    }
+
+    .pay-btn {
+        width: 100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- PAYMENT CARD -->
+    <div class="payment-card">
+
+        <div class="icon">💳</div>
+
+        <h2>Complete Your Payment</h2>
+        <p>Secure payment powered by Razorpay</p>
+
+        <button class="pay-btn" onclick="payNow()">Pay Now</button>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container">
+
+            <h6>🛒 Victim's Cart</h6>
+
+            <p style="margin: 0; font-size: 14px;">
+                @copyright All rights reserved by <b>Charan</b>
+            </p>
+
+            <p style="margin: 5px 0; font-size: 14px;">
+                📧 Email: charanv003@gmail.com
+            </p>
+
+            <p style="margin: 5px 0; font-size: 14px;">
+                📱 Mobile: +91 7799431776
+            </p>
+
+            <div style="margin-top:10px;">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>
+
+<script>
+function payNow() {
+
+    fetch("/create-order", { method: "POST" })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        var options = {
+            "key": data.key,
+            "amount": data.amount,
+            "currency": "INR",
+            "name": "Victim's Cart",
+            "order_id": data.id,
+
+            handler: function (response) {
+
+                fetch("/verify-payment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                        order_db_id: data.order_db_id
+                    })
+                })
+                .then(() => {
+                    window.location.href = "/user/order-success/" + data.order_db_id;
+                });
+
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+
+    })
+    .catch(() => {
+        alert("Server error");
+    });
+}
+</script>
+
+</body>
+</html>

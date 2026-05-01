@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCart</title>
+
+    <!-- CSS link (add later if not added yet) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <h2 class="logo">🛒 SmartCart</h2>
+
+        <nav>
+            <a href="/admin-signup">Admin Signup</a>
+            <a href="/admin-login">Admin Login</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Welcome to SmartCart 🛒</h1>
+        <p>Your simple and smart shopping platform</p>
+
+        <div class="buttons">
+            <a href="/admin-signup" class="btn">Admin Signup</a>
+            <a href="/admin-login" class="btn">Admin Login</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 SmartCart. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

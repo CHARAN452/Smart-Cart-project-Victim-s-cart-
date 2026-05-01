@@ -1,0 +1,60 @@
+<!-- NAVBAR START -->
+<style>
+.navbar {
+    background: linear-gradient(90deg, #0f2c6c, #1e56a0);
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.brand span {
+    font-weight: normal;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-left: 8px;
+}
+
+.logout {
+    color: white;
+    text-decoration: none;
+    background: #e53935;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.logout:hover {
+    background: #b71c1c;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+</style>
+
+<div class="navbar">
+    <div class="brand">
+        Victim's Cart
+    </div>
+
+    <a href="{{ url_for('admin_logout') }}" class="logout">
+        Logout
+    </a>
+</div>
+<!-- NAVBAR END -->

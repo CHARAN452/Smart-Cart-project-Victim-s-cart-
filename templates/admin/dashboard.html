@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.dashboard {
+    padding: 30px;
+}
+
+.dashboard h2 {
+    text-align: center;
+    color: #1e56a0;
+    margin-bottom: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1e56a0;
+}
+
+.label {
+    margin-top: 5px;
+    color: #555;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #1e56a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #0f2c6c;
+}
+
+.profile {
+    background: linear-gradient(135deg, #1e56a0, #0f2c6c);
+    color: white;
+}
+
+.profile .btn {
+    background: white;
+    color: #1e56a0;
+}
+
+.profile .btn:hover {
+    background: #eee;
+}
+</style>
+
+<div class="dashboard">
+
+    <h2>👨‍💼 Admin Dashboard</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="number">{{ order_count }}</div>
+            <div class="label">Total Orders</div>
+            <a href="{{ url_for('admin_orders') }}" class="btn">View Orders</a>
+        </div>
+
+        <div class="card">
+            <div class="number">+</div>
+            <div class="label">Add Product</div>
+            <a href="{{ url_for('add_item') }}" class="btn">Add Product</a>
+        </div>
+
+        <div class="card">
+            <div class="number">📦</div>
+            <div class="label">Manage Products</div>
+            <a href="{{ url_for('manage_products') }}" class="btn">Manage</a>
+        </div>
+
+        <div class="card profile">
+            <div class="number">👤</div>
+            <div class="label">Admin Profile</div>
+            <a href="{{ url_for('admin_profile') }}" class="btn">Open</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

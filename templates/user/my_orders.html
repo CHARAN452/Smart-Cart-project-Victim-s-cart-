@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders - Victim's Cart</title>
+
+<style>
+
+/* BACKGROUND */
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a,#020617);
+    color:#f1f5f9;
+}
+
+/* CONTAINER */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+/* TITLE */
+h2{
+    margin-bottom:20px;
+}
+
+/* ORDER CARD */
+.order-card{
+    background:#0f172a;
+    padding:20px;
+    border-radius:14px;
+    border:1px solid #1e293b;
+    margin-bottom:15px;
+    transition:0.3s;
+    box-shadow:0 0 15px rgba(34,197,94,0.1);
+}
+
+/* HOVER */
+.order-card:hover{
+    transform:scale(1.01);
+    box-shadow:0 0 25px rgba(34,197,94,0.3);
+}
+
+/* TEXT */
+.order-card p{
+    margin:5px 0;
+    color:#cbd5f5;
+}
+
+/* STATUS COLORS */
+.status-success{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.status-pending{
+    color:#f59e0b;
+    font-weight:bold;
+}
+
+.status-failed{
+    color:#ef4444;
+    font-weight:bold;
+}
+
+/* BUTTONS */
+.actions{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.3s;
+}
+
+/* VIEW */
+.view-btn{
+    background:#22c55e;
+    color:black;
+}
+
+.view-btn:hover{
+    background:#16a34a;
+}
+
+/* INVOICE */
+.invoice-btn{
+    background:#334155;
+    color:white;
+}
+
+.invoice-btn:hover{
+    background:#475569;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    margin-top:50px;
+    color:#94a3b8;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📦 My Orders</h2>
+
+{% if orders %}
+
+    {% for order in orders %}
+
+        <div class="order-card">
+
+            <p><b>Order ID:</b> {{ order.order_id }}</p>
+            <p><b>Amount:</b> ₹{{ order.amount }}</p>
+
+            <p>
+                <b>Status:</b>
+                <span class="
+                    {% if order.payment_status == 'Success' %}
+                        status-success
+                    {% elif order.payment_status == 'Pending' %}
+                        status-pending
+                    {% else %}
+                        status-failed
+                    {% endif %}
+                ">
+                    {{ order.payment_status }}
+                </span>
+            </p>
+
+            <div class="actions">
+
+                <a href="/user/order-success/{{ order.order_id }}"
+                   class="btn view-btn">
+                   View Details
+                </a>
+
+                <a href="/user/download-invoice/{{ order.order_id }}"
+                   class="btn invoice-btn">
+                   Download Invoice
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="empty">
+        <h3>No orders yet 🛒</h3>
+        <p>Start shopping to see your orders here</p>
+    </div>
+
+{% endif %}
+
+</div>
+<footer style="
+    background: #020617;
+    border-top: 1px solid #334155;
+    color: #94a3b8;
+    padding: 20px 0;
+    text-align: center;
+">
+
+    <div class="container">
+
+        <h6 style="color:#22c55e; margin-bottom:10px;">
+            🛒 Victim's Cart
+        </h6>
+
+        <p style="margin: 0; font-size: 14px;">
+            @copyright All rights reserved by <b>Charan</b>
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📧 Email: charanv003@gmail.com
+        </p>
+
+        <p style="margin: 5px 0; font-size: 14px;">
+            📱 Mobile: +91 7799431776
+        </p>
+
+        <div style="margin-top:10px;">
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" style="color:#94a3b8; margin:0 8px; text-decoration:none;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>
