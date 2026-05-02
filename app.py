@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash,url_for
 from flask_mail import Mail, Message
-import mysql.connector
 import bcrypt
 import random
 import config
@@ -401,38 +400,54 @@ def user_logout():
 # CART
 # ================================================================
 
-@app.route('/add-to-cart/<int:product_id>')
+@app.route('/add-to-cart/<int:product_id>', methods=['POST'])
 def add_to_cart(product_id):
+
     if 'user_id' not in session:
-        return redirect('/user-login')
+        return jsonify({"status": "login_required"}), 401
 
     user_id = session['user_id']
 
     db = get_db()
     cursor = db.cursor()
 
-    cursor.execute(
-        "SELECT * FROM cart WHERE user_id=? AND product_id=?",
-        (user_id, product_id)
-    )
+    # check product already exists
+    cursor.execute("""
+        SELECT * FROM cart 
+        WHERE user_id=? AND product_id=?
+    """, (user_id, product_id))
+
     item = cursor.fetchone()
 
     if item:
-        cursor.execute(
-            "UPDATE cart SET quantity = quantity + 1 WHERE cart_id=?",
-            (item['cart_id'],)
-        )
+        cursor.execute("""
+            UPDATE cart 
+            SET quantity = quantity + 1 
+            WHERE cart_id=?
+        """, (item['cart_id'],))
     else:
-        cursor.execute(
-            "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, 1)",
-            (user_id, product_id)
-        )
+        cursor.execute("""
+            INSERT INTO cart (user_id, product_id, quantity)
+            VALUES (?, ?, 1)
+        """, (user_id, product_id))
 
     db.commit()
+
+    # get updated count
+    cursor.execute("""
+        SELECT SUM(quantity) as total 
+        FROM cart 
+        WHERE user_id=?
+    """, (user_id,))
+
+    count = cursor.fetchone()["total"]
+
     db.close()
 
-    flash("Added to cart!", "success")
-    return redirect(request.referrer)
+    return jsonify({
+        "status": "success",
+        "cart_count": count or 0
+    })
 
 @app.route('/buy-now/<int:product_id>')
 def buy_now(product_id):
@@ -1220,6 +1235,10 @@ def verify_payment():
     except Exception as e:
         print("VERIFY ERROR:", e)
         return "Payment Failed"
+    
+@app.route('/checkout-buy-now', methods=['GET', 'POST'])
+def checkout_buy_now():
+    return render_template('checkout_buy_now.html')
 
 
 
