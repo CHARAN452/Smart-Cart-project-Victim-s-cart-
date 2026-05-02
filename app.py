@@ -1,18 +1,20 @@
-from flask import Flask, render_template, request, redirect, session, flash,url_for
+from flask import Flask, render_template, request, redirect, session, flash, url_for, jsonify
 from flask_mail import Mail, Message
 import bcrypt
 import random
-import config
 import os
-from flask import  flash
 import traceback
-from werkzeug.utils import secure_filename
-import razorpay
-from flask import jsonify
-from utils.pdf_generator import generate_pdf
 import hmac
 import hashlib
+
+from werkzeug.utils import secure_filename
+
+import razorpay
+
+import config
 from config import RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET
+
+from utils.pdf_generator import generate_pdf
 
 
 
