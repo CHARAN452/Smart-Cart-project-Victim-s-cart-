@@ -6,6 +6,8 @@ import os
 import traceback
 import hmac
 import hashlib
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 from werkzeug.utils import secure_filename
 
@@ -1246,4 +1248,4 @@ def checkout_buy_now():
 
 # ---------------- RUN ----------------
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
